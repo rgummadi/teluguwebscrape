@@ -13,8 +13,9 @@ class InsertMongoPipeline(object):
     words_to_filter = ['sexual','sex','health']
 
     def __init__(self):
-        connection_string = "mongodb://localhost"
-        connection = pymongo.Connection(connection_string,safe=True)
+        #connection_string = "mongodb://localhost"
+        connection_string = "mongodb://heroku_app35242924:90s0k6rnu5a9iulpc1lqbf3327@ds059471.mongolab.com:59471/heroku_app35242924"
+        connection = pymongo.Connection(connection_string, safe=True)
         db = connection.teluguweb
         self.links = db.links
 

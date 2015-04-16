@@ -16,7 +16,8 @@ class InsertMongoPipeline(object):
         #connection_string = "mongodb://localhost"
         connection_string = "mongodb://heroku_app35242924:90s0k6rnu5a9iulpc1lqbf3327@ds059471.mongolab.com:59471/heroku_app35242924"
         connection = pymongo.Connection(connection_string, safe=True)
-        db = connection.teluguweb
+        #db = connection.teluguweb
+        db = connection.heroku_app35242924
         self.links = db.links
 
     def process_item(self, item, spider):

@@ -84,6 +84,7 @@ class AJSpider(scrapy.Spider):
         # #target.write(item['desc'][0].encode("utf-8"))
         # print "printing desc"
         # print item['mindesc']
+
         #getting the image url
 
         image_relative_url = response.xpath('//td[@id="ContentPlaceHolder1_tdStoryImg"]/img/@src').extract()

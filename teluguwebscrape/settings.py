@@ -19,13 +19,16 @@ NEWSPIDER_MODULE = 'teluguwebscrape.spiders'
 ITEM_PIPELINES = {'teluguwebscrape.imgpipeline.MyImagesPipeline': 1, 'teluguwebscrape.pipelines.InsertMongoPipeline': 800}
 
 #IMAGES_STORE = '/Users/rgummadi/Dropbox/WWW/dev/teluguweb/teluguwebapp/static/images'
-IMAGES_STORE = os.path.join(BASE_DIR, 'teluguwebscrape/images')
+#IMAGES_STORE = os.path.join(BASE_DIR, 'teluguwebscrape/images')
+IMAGES_STORE = "s3://teluguweb-assets/images/"
 
 IMAGES_THUMBS = {
     'small': (200, 200),
     'big': (270, 270),
 }
 
+AWS_ACCESS_KEY_ID = "AKIAIQGOE7RILUYRYTNQ"
+AWS_SECRET_ACCESS_KEY = "1NSzyLe0bQD3Pq+GJfHJpoAG1nIIWbMF1EvHGzWy"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'teluguwebscrape (+http://www.yourdomain.com)'

@@ -3,3 +3,4 @@ cffi==0.8.6
 Scrapy==0.24.4
 Pillow==2.8.1
 boto==2.32.1
+service-identity==14.0.0

@@ -20,15 +20,15 @@ ITEM_PIPELINES = {'teluguwebscrape.imgpipeline.MyImagesPipeline': 1, 'teluguwebs
 
 #IMAGES_STORE = '/Users/rgummadi/Dropbox/WWW/dev/teluguweb/teluguwebapp/static/images'
 #IMAGES_STORE = os.path.join(BASE_DIR, 'teluguwebscrape/images')
-IMAGES_STORE = "s3://%s/images/" %os.environ["S3_BUCKET"]
+IMAGES_STORE = "s3://%s/images/" % os.environ["S3_BUCKET"]
 
 IMAGES_THUMBS = {
     'small': (200, 200),
     'big': (270, 270),
 }
 
-AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY_ID"]
-AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_ACCESS_KEY"]
+AWS_ACCESS_KEY_ID = os.environ["AWS_ACCESS_KEY"]
+AWS_SECRET_ACCESS_KEY = os.environ["AWS_SECRET_KEY"]
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'teluguwebscrape (+http://www.yourdomain.com)'

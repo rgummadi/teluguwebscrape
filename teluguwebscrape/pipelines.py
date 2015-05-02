@@ -20,9 +20,9 @@ class InsertMongoPipeline(object):
             connection = pymongo.Connection(connection_string, safe=True)
             db = connection.teluguweb
         else:
-            connection_string = "mongodb://heroku_app35242924:90s0k6rnu5a9iulpc1lqbf3327@ds059471.mongolab.com:59471/heroku_app35242924"
+            connection_string = os.environ["MONGOLAB_URI"]
             connection = pymongo.Connection(connection_string, safe=True)
-            db = connection.heroku_app35242924
+            db = connection.heroku_app36456202
 
         self.links = db.links
 

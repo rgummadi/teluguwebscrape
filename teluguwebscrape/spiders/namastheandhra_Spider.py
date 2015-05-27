@@ -30,7 +30,7 @@ class namastheandhraSpider(scrapy.Spider):
             #target.write(item['url'] + "\n")
 
             #yield item
-            yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item, 'target': target})
+            yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item, })
 
         #bottom -left - all the news items
         for link in response.xpath('//div[@style="padding:5px; "]/div[@class="row-fluid"]/div/div/a'):
@@ -50,7 +50,7 @@ class namastheandhraSpider(scrapy.Spider):
             #target.write(item['url'] + "\n")
 
             #yield item
-            yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item, 'target': target})
+            yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item})
 
         #special story
         for link in response.xpath('/html/body/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[1]/div/a'):

@@ -32,10 +32,16 @@ class teluguoneSpider(scrapy.Spider):
 
     def parse_desc(self, response):
         item = response.meta['item']
+        item['desc'] = " "
+        getdesc = response.xpath('//div[@class="description_box_main"]/descendant::*/text()')
+        #print getdesc
+        for des in getdesc:
+            item['desc'] = item['desc'] + des.extract().strip()
+            # print des.extract().strip()
+        # print item['desc']
 
-        item['desc'] = response.xpath('(//div[@class="description_box_main"])[1]/div/div/div[3]/p[4]/span/text()').extract()
-
-        desc = item['desc'][0].split()
+        desc = item['desc'].split()
+        # print desc
 
         if len(desc) > 30:
             size = 30
@@ -47,8 +53,8 @@ class teluguoneSpider(scrapy.Spider):
             item['mindesc'] = item['mindesc'] + " " + desc[index]
 
         #target.write(item['desc'][0].encode("utf-8"))
-        print "printing desc"
-        print item['mindesc']
+        # print "printing desc"
+        # print item['mindesc']
 
         #getting the image url
 

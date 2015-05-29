@@ -70,7 +70,7 @@ class AJSpider(scrapy.Spider):
         getdesc = response.xpath('//*[@id="ContentPlaceHolder1_lblStoryDetails"]/text()')
         for des in getdesc:
             item['desc'] = item['desc'] + des.extract()
-        print item['desc']
+        # print item['desc']
 
         # if not item['desc']:
         #     item['desc'] = response.xpath('//*[@id="ContentPlaceHolder1_lblStoryDetails"]/text()').extract()

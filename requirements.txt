@@ -4,3 +4,5 @@ Scrapy==0.24.4
 Pillow==2.8.1
 boto==2.32.1
 service-identity==14.0.0
+scrapyd==1.0.1
+scrapy-heroku==0.7.1

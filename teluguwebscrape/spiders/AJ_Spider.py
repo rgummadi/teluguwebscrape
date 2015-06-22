@@ -19,7 +19,6 @@ class AJSpider(scrapy.Spider):
             url = link.xpath('td/div/table/tr/td/a/@href').extract()
             print url[0]
 
-
             item['engsource'] = 'andhrajyothy'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
             h = HTMLParser.HTMLParser()
@@ -38,9 +37,7 @@ class AJSpider(scrapy.Spider):
 
             item = TeluguwebscrapeItem()
             url = link.xpath('a/@href').extract()
-            print "hi"
             print url[0]
-
 
             item['engsource'] = 'andhrajyothy'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -76,7 +73,7 @@ class AJSpider(scrapy.Spider):
         #     item['desc'] = response.xpath('//*[@id="ContentPlaceHolder1_lblStoryDetails"]/text()').extract()
         #
         # desc = item['desc'][0].split()
-        # #desc = "hello"
+
         desc = item['desc'].split()
         if len(desc) > 30:
             size = 30
@@ -94,7 +91,6 @@ class AJSpider(scrapy.Spider):
         #getting the image url
 
         image_relative_url = response.xpath('//td[@id="ContentPlaceHolder1_tdStoryImg"]/img/@src').extract()
-
 
         if image_relative_url:
             image_relative_url = image_relative_url[0]

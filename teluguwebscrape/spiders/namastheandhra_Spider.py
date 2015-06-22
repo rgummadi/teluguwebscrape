@@ -13,7 +13,7 @@ class namastheandhraSpider(scrapy.Spider):
     def parse(self, response):
 
         #top left - taja vartalu
-        for link in response.xpath('/html/body/div[1]/div/div[2]/div[1]/div[2]/div[1]/div[1]/div[2]/a'):
+        for link in response.xpath('//div[@style="margin-bottom:5px; border-bottom:solid 1px #999999;"]/div[2]/a'):
             item = TeluguwebscrapeItem()
             url = link.xpath('@href').extract()
             print url[0]
@@ -45,7 +45,7 @@ class namastheandhraSpider(scrapy.Spider):
             item['source'] = h.unescape('&#3112;&#3118;&#3128;&#3149;&#3108;&#3143; &#3078;&#3074;&#3111;&#3149;&#3120;')
             #print absolute_url
             item['url'] = absolute_url
-            item['title'] = link.xpath('text()').extract()
+            item['title'] = link.xpath('h3/text()').extract()
             item['itemweight'] = 10
             #target.write(item['url'] + "\n")
 
@@ -96,16 +96,31 @@ class namastheandhraSpider(scrapy.Spider):
 
     def parse_desc(self, response):
         item = response.meta['item']
+        item['desc'] = " "
 
         #print response
-        item['desc'] = response.xpath('/html/body/div[1]/div/div[2]/div[1]/div/div/div[1]/div[1]/div/p[2]/text()')\
-                        .extract()
 
-        if not item['desc']:
-            item['desc'] = response.xpath('/html/body/div[1]/div/div[2]/div[1]/div/div/div[1]/div[1]/div/div[2]/text()')\
-                .extract()
+        getdesc = response.xpath('///html/body/div[1]/div/div[2]/div[1]/div/div/div[1]/div[1]/div/p[2]/text()')
+        for des in getdesc:
+            item['desc'] = item['desc'] + des.extract()
 
-        desc = item['desc'][0].split()
+        # if not getdesc:
+        getdesc = response.xpath('///html/body/div[1]/div/div[2]/div[1]/div/div/div[1]/div[1]/div/div[2]/text()')
+        for des in getdesc:
+            item['desc'] = item['desc'] + des.extract()
+
+        getdesc = response.xpath('//div[@class="post"]/p/text()')
+        for des in getdesc:
+            item['desc'] = item['desc'] + des.extract()
+
+        # item['desc'] = response.xpath('/html/body/div[1]/div/div[2]/div[1]/div/div/div[1]/div[1]/div/p[2]/text()')\
+        #                 .extract()
+        #
+        # if not item['desc']:
+        #     item['desc'] = response.xpath('/html/body/div[1]/div/div[2]/div[1]/div/div/div[1]/div[1]/div/div[2]/text()')\
+        #         .extract()
+
+        desc = item['desc'].split()
 
         if len(desc) > 30:
             size = 30
@@ -117,16 +132,19 @@ class namastheandhraSpider(scrapy.Spider):
             item['mindesc'] = item['mindesc'] + " " + desc[index]
 
         #target.write(item['desc'][0].encode("utf-8"))
-        print "printing desc"
-        print item['mindesc']
+        # print "printing desc"
+        # print item['mindesc']
 
         #getting the image url
 
-        image_relative_url = response.xpath('/html/body/div[1]/div/div[2]/div[1]/div/div/div[1]/div[1]/div/div[1]/a/\
-                    img/@src').extract()
+        image_relative_url = response.xpath('/html/body/div[2]/div/div[2]/div[1]/div/div/div[1]/div[1]/div/div[1]/a/img\
+                                            /@src').extract()
         if not image_relative_url:
-            image_relative_url = response.xpath('/html/body/div[1]/div/div[2]/div[1]/div/div/div[1]/div[1]/div/p[1]/a/\
-                                 img/@src').extract()
+            image_relative_url = response.xpath('/html/body/div[2]/div/div[2]/div[1]/div/div/div[1]/div[1]/div/p[1]/a/\
+            img/@src').extract()
+
+        if not image_relative_url:
+            image_relative_url = response.xpath('//div[@class="post"]/p/a/img/@src').extract()
 
         if image_relative_url:
             image_relative_url = image_relative_url[0]

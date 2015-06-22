@@ -18,7 +18,6 @@ class webduniaSpider(scrapy.Spider):
             item = TeluguwebscrapeItem()
             url = link.xpath('.//a/@href').extract()
             print url[0]
-            #print "hi"
 
             item['engsource'] = 'webdunia'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -36,7 +35,6 @@ class webduniaSpider(scrapy.Spider):
             item = TeluguwebscrapeItem()
             url = link.xpath('a/@href').extract()
             print url[0]
-            #print "hi"
 
             item['engsource'] = 'webdunia'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -47,14 +45,13 @@ class webduniaSpider(scrapy.Spider):
             item['title'] = link.xpath('a/text()').extract()
             item['itemweight'] = 9
 
-            yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item,})
+            yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item, })
 
         #get the important news top item
         for link in response.xpath('//*[@id="newCont_306_1"]/div/div[1]/h2'):
             item = TeluguwebscrapeItem()
             url = link.xpath('a/@href').extract()
             print url[0]
-            #print "hi"
 
             item['engsource'] = 'webdunia'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -65,14 +62,13 @@ class webduniaSpider(scrapy.Spider):
             item['title'] = link.xpath('a/text()').extract()
             item['itemweight'] = 8
 
-            yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item,})
+            yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item, })
 
-        # # get the important news list items
+        # get the important news list items
         for link in response.xpath('//*[@id="newCont_306_1"]/div/div[1]/div/ul/li'):
             item = TeluguwebscrapeItem()
             url = link.xpath('a/@href').extract()
             print url[0]
-            #print "hi"
 
             item['engsource'] = 'webdunia'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -105,12 +101,10 @@ class webduniaSpider(scrapy.Spider):
         for index in range(size):
             item['mindesc'] = item['mindesc'] + " " + desc[index]
 
-        #target.write(item['desc'][0].encode("utf-8"))
         print "printing desc"
         print item['mindesc']
 
         #getting the image url
-
         image_relative_url = response.xpath('//*[@id="contContainer"]/div[4]/div[1]/div[1]/div[2]/div[6]/div[1]/div[1]/div/img/@src')\
             .extract()
 

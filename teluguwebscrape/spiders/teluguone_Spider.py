@@ -12,23 +12,59 @@ class teluguoneSpider(scrapy.Spider):
 
     def parse(self,response):
 
+        #slideshow
+        # for link in response.xpath('//div[@class="slider_container_main"]/div/ul/li/div'):
+        #     item = TeluguwebscrapeItem()
+        #     url = link.xpath('.//a/@href').extract()
+        #     print url[0]
+        #
+        #     item['engsource'] = 'teluguone'
+        #     absolute_url = urlparse.urljoin(response.url, url[0].strip())
+        #     h = HTMLParser.HTMLParser()
+        #     item['source'] = h.unescape('&#3108;&#3142;&#3122;&#3137;&#3095;&#3137; &#3125;&#3112;&#3149;')
+        #     #print absolute_url
+        #     item['url'] = absolute_url
+        #     item['title'] = link.xpath('.//a/text()').extract()
+        #     item['itemweight'] = 10
+        #
+        #     #yield item
+        #     yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item, })
+
+        #main news
         for link in response.xpath('//div[@class="news_thumb_container_main"]//div[@class="telugu_newstitle_txt_12px"]'):
             item = TeluguwebscrapeItem()
             url = link.xpath('a/@href').extract()
             print url[0]
-            #print "hi"
 
             item['engsource'] = 'teluguone'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
             h = HTMLParser.HTMLParser()
-            item['source'] = h.unescape('&#3125;&#3112;&#3149; &#3079;&#3074;&#3105;&#3135;&#3119;&#3134;')
+            item['source'] = h.unescape('&#3108;&#3142;&#3122;&#3137;&#3095;&#3137; &#3125;&#3112;&#3149;')
             #print absolute_url
             item['url'] = absolute_url
             item['title'] = link.xpath('a/text()').extract()
             item['itemweight'] = 10
 
             #yield item
-            yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item,})
+            yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item, })
+
+        #story of the day
+        for link in response.xpath('//div[@class="storyoftheday_heading_box"]/div'):
+            item = TeluguwebscrapeItem()
+            url = link.xpath('a/@href').extract()
+            print url[0]
+
+            item['engsource'] = 'teluguone'
+            absolute_url = urlparse.urljoin(response.url, url[0].strip())
+            h = HTMLParser.HTMLParser()
+            item['source'] = h.unescape('&#3108;&#3142;&#3122;&#3137;&#3095;&#3137; &#3125;&#3112;&#3149;')
+            #print absolute_url
+            item['url'] = absolute_url
+            item['title'] = link.xpath('a/text()').extract()
+            item['itemweight'] = 10
+
+            #yield item
+            yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item, })
 
     def parse_desc(self, response):
         item = response.meta['item']

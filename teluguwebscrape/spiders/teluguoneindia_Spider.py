@@ -12,12 +12,11 @@ class teluguoneindiaSpider(scrapy.Spider):
 
     def parse(self, response):
 
-        #main news heading
+        #main news heading 1
         for link in response.xpath('(//h3[@class="main-news-heading"])[1]'):
             item = TeluguwebscrapeItem()
             url = link.xpath('a/@href').extract()
             print url[0]
-            #print "hi"
 
             item['engsource'] = 'teluguoneindia'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -31,13 +30,30 @@ class teluguoneindiaSpider(scrapy.Spider):
             #yield item
             yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item, })
 
-        #vaarthalu
+        #main news heading 2
+        for link in response.xpath('(//h3[@class="main-news-heading"])[2]'):
+            item = TeluguwebscrapeItem()
+            url = link.xpath('a/@href').extract()
+            print url[0]
+
+            item['engsource'] = 'teluguoneindia'
+            absolute_url = urlparse.urljoin(response.url, url[0].strip())
+            h = HTMLParser.HTMLParser()
+            item['source'] = h.unescape('&#3125;&#3112;&#3149; &#3079;&#3074;&#3105;&#3135;&#3119;&#3134;')
+            #print absolute_url
+            item['url'] = absolute_url
+            item['title'] = link.xpath('a/text()').extract()
+            item['itemweight'] = 10
+
+            #yield item
+            yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item, })
+
+        # vaarthalu
         for link in response.xpath('//div[@class="news-desc"]'):
 
             item = TeluguwebscrapeItem()
             url = link.xpath('a/@href').extract()
             print url[0]
-            #print "hi"
 
             item['engsource'] = 'teluguoneindia'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -50,7 +66,7 @@ class teluguoneindiaSpider(scrapy.Spider):
 
             #yield item
 
-            yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item,})
+            yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item, })
 
         #talkoftoday
         for link in response.xpath('//*[@id="telugu-container"]/section/div[2]/ul/li'):

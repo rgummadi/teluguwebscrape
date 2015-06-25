@@ -101,8 +101,8 @@ class webduniaSpider(scrapy.Spider):
         for index in range(size):
             item['mindesc'] = item['mindesc'] + " " + desc[index]
 
-        print "printing desc"
-        print item['mindesc']
+        # print "printing desc"
+        # print item['mindesc']
 
         #getting the image url
         image_relative_url = response.xpath('//*[@id="contContainer"]/div[4]/div[1]/div[1]/div[2]/div[6]/div[1]/div[1]/div/img/@src')\

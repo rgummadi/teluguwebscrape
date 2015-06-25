@@ -105,8 +105,8 @@ class teluguoneindiaSpider(scrapy.Spider):
         for index in range(size):
             item['mindesc'] = item['mindesc'] + " " + desc[index]
 
-        print "printing desc"
-        print item['mindesc']
+        # print "printing desc"
+        # print item['mindesc']
 
         #getting the image url
         image_relative_url = response.xpath('//article//div[@class="big_center_img"]/div/img/@src').extract()

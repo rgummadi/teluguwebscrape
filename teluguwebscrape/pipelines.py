@@ -9,6 +9,7 @@ import datetime
 import sys
 import os
 from scrapy.exceptions import DropItem
+from bson.objectid import ObjectId
 
 class InsertMongoPipeline(object):
     words_to_filter = ['sexual','sex','health']
@@ -25,6 +26,7 @@ class InsertMongoPipeline(object):
             db = connection.heroku_app36456202
 
         self.links = db.links
+        self.counters = db.counters
 
     def process_item(self, item, spider):
 
@@ -39,7 +41,12 @@ class InsertMongoPipeline(object):
 
         if item['title']:
             time = datetime.time(0,0,0)
-            post = {"source": item['source'],
+            result = self.counters.find_and_modify(query={'_id':'linkid'}, update={'$inc':{'seq':1}},upsert=True);
+            linkid = int(result["seq"])
+
+            post = {"linkid":linkid,
+                    "itemid":item['itemid'],
+                    "source": item['source'],
                     "engsource": item['engsource'],
                     "title": item['title'][0],
                     "url": item['url'],

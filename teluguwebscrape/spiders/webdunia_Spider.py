@@ -11,13 +11,15 @@ class webduniaSpider(scrapy.Spider):
     start_urls = ["http://telugu.webdunia.com"]
 
     def parse(self, response):
-
+        itemid = 0
         #get the news from slider
         for link in response.xpath('//*[@id="rotate_pane_305"]/li/div[1]/div/div[1]'):
 
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('.//a/@href').extract()
-            print url[0]
+            # print url[0]
 
             item['engsource'] = 'webdunia'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -33,8 +35,10 @@ class webduniaSpider(scrapy.Spider):
         #get the imp news
         for link in response.xpath('//*[@id="newCont_306_1"]/div/div[2]/ul/li'):
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('a/@href').extract()
-            print url[0]
+            # print url[0]
 
             item['engsource'] = 'webdunia'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -50,8 +54,10 @@ class webduniaSpider(scrapy.Spider):
         #get the important news top item
         for link in response.xpath('//*[@id="newCont_306_1"]/div/div[1]/h2'):
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('a/@href').extract()
-            print url[0]
+            # print url[0]
 
             item['engsource'] = 'webdunia'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -67,8 +73,10 @@ class webduniaSpider(scrapy.Spider):
         # get the important news list items
         for link in response.xpath('//*[@id="newCont_306_1"]/div/div[1]/div/ul/li'):
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('a/@href').extract()
-            print url[0]
+            # print url[0]
 
             item['engsource'] = 'webdunia'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())

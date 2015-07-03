@@ -11,6 +11,7 @@ import scrapy
 class TeluguwebscrapeItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
+    itemid = scrapy.Field()
     source = scrapy.Field()
     engsource = scrapy.Field()
     title = scrapy.Field()

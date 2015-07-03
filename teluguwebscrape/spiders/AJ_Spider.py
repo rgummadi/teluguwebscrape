@@ -10,12 +10,15 @@ class AJSpider(scrapy.Spider):
     allowed_domains = ["andhrajyothy.com"]
     start_urls = ["http://andhrajyothy.com"]
 
-    def parse(self, response):
 
+    def parse(self, response):
+        itemid = 0
         #mukhyamsalu
         for link in response.xpath('//*[@id="ContentPlaceHolder1_dlstImpNews"]/tr'):
 
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('td/div/table/tr/td/a/@href').extract()
             print url[0]
 
@@ -36,8 +39,11 @@ class AJSpider(scrapy.Spider):
         for link in response.xpath('//*[@id="ContentPlaceHolder1_ulOthImpNews"]/li'):
 
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('a/@href').extract()
             print url[0]
+            print itemid
 
             item['engsource'] = 'andhrajyothy'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -67,12 +73,7 @@ class AJSpider(scrapy.Spider):
         getdesc = response.xpath('//*[@id="ContentPlaceHolder1_lblStoryDetails"]/text()')
         for des in getdesc:
             item['desc'] = item['desc'] + des.extract()
-        # print item['desc']
 
-        # if not item['desc']:
-        #     item['desc'] = response.xpath('//*[@id="ContentPlaceHolder1_lblStoryDetails"]/text()').extract()
-        #
-        # desc = item['desc'][0].split()
 
         desc = item['desc'].split()
         if len(desc) > 30:

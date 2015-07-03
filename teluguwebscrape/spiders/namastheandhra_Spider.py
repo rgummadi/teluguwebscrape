@@ -11,13 +11,15 @@ class namastheandhraSpider(scrapy.Spider):
     start_urls = ["http://www.namastheandhra.com"]
 
     def parse(self, response):
+        itemid = 0
 
         #top left - taja vartalu
         for link in response.xpath('//div[@style="margin-bottom:5px; border-bottom:solid 1px #999999;"]/div[2]/a'):
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('@href').extract()
-            print url[0]
-            #print "hi"
+            # print url[0]
 
             item['engsource'] = 'namastheandhra'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -27,7 +29,6 @@ class namastheandhraSpider(scrapy.Spider):
             item['url'] = absolute_url
             item['title'] = link.xpath('text()').extract()
             item['itemweight'] = 10
-            #target.write(item['url'] + "\n")
 
             #yield item
             yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item, })
@@ -35,9 +36,10 @@ class namastheandhraSpider(scrapy.Spider):
         #bottom -left - all the news items
         for link in response.xpath('//div[@style="padding:5px; "]/div[@class="row-fluid"]/div/div/a'):
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('@href').extract()
-            print url[0]
-            #print "hi"
+            # print url[0]
 
             item['engsource'] = 'namastheandhra'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -47,7 +49,6 @@ class namastheandhraSpider(scrapy.Spider):
             item['url'] = absolute_url
             item['title'] = link.xpath('h3/text()').extract()
             item['itemweight'] = 10
-            #target.write(item['url'] + "\n")
 
             #yield item
             yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item})
@@ -55,9 +56,10 @@ class namastheandhraSpider(scrapy.Spider):
         #special story
         for link in response.xpath('/html/body/div[1]/div/div[2]/div[1]/div[2]/div[2]/div[1]/div/a'):
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('@href').extract()
-            print url[0]
-            #print "hi"
+            # print url[0]
 
             item['engsource'] = 'namastheandhra'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -75,9 +77,10 @@ class namastheandhraSpider(scrapy.Spider):
         #rajakeeyalu
         for link in response.xpath('//div[@style="padding:5px; "][2]/ul[@class="article-array"]/li/a'):
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('@href').extract()
-            print url[0]
-            #print "hi"
+            # print url[0]
 
             item['engsource'] = 'namastheandhra'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -88,7 +91,6 @@ class namastheandhraSpider(scrapy.Spider):
             item['title'] = link.xpath('text()').extract()
 
             item['itemweight'] = 10
-            #target.write(item['url'] + "\n")
 
             #yield item
             yield scrapy.http.Request(absolute_url, callback=self.parse_desc, meta={'item': item})

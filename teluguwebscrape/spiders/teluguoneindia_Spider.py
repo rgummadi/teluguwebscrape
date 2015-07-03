@@ -11,12 +11,15 @@ class teluguoneindiaSpider(scrapy.Spider):
     start_urls = ["http://telugu.oneindia.com"]
 
     def parse(self, response):
+        itemid = 0
 
         #main news heading 1
         for link in response.xpath('(//h3[@class="main-news-heading"])[1]'):
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('a/@href').extract()
-            print url[0]
+            #print url[0]
 
             item['engsource'] = 'teluguoneindia'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -33,8 +36,10 @@ class teluguoneindiaSpider(scrapy.Spider):
         #main news heading 2
         for link in response.xpath('(//h3[@class="main-news-heading"])[2]'):
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('a/@href').extract()
-            print url[0]
+            # print url[0]
 
             item['engsource'] = 'teluguoneindia'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -52,8 +57,10 @@ class teluguoneindiaSpider(scrapy.Spider):
         for link in response.xpath('//div[@class="news-desc"]'):
 
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('a/@href').extract()
-            print url[0]
+            # print url[0]
 
             item['engsource'] = 'teluguoneindia'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -72,9 +79,10 @@ class teluguoneindiaSpider(scrapy.Spider):
         for link in response.xpath('//*[@id="telugu-container"]/section/div[2]/ul/li'):
 
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('div/a/@href').extract()
-            print url[0]
-            #print "hi"
+            # print url[0]
 
             item['engsource'] = 'teluguoneindia'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())

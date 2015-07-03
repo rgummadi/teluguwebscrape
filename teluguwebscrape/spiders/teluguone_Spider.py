@@ -11,6 +11,7 @@ class teluguoneSpider(scrapy.Spider):
     start_urls = ["http://teluguone.com/news"]
 
     def parse(self,response):
+        itemid = 0
 
         #slideshow
         # for link in response.xpath('//div[@class="slider_container_main"]/div/ul/li/div'):
@@ -33,8 +34,10 @@ class teluguoneSpider(scrapy.Spider):
         #main news
         for link in response.xpath('//div[@class="news_thumb_container_main"]//div[@class="telugu_newstitle_txt_12px"]'):
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('a/@href').extract()
-            print url[0]
+            # print url[0]
 
             item['engsource'] = 'teluguone'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
@@ -51,8 +54,10 @@ class teluguoneSpider(scrapy.Spider):
         #story of the day
         for link in response.xpath('//div[@class="storyoftheday_heading_box"]/div'):
             item = TeluguwebscrapeItem()
+            item['itemid'] = itemid
+            itemid = itemid + 1
             url = link.xpath('a/@href').extract()
-            print url[0]
+            # print url[0]
 
             item['engsource'] = 'teluguone'
             absolute_url = urlparse.urljoin(response.url, url[0].strip())
